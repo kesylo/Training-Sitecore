@@ -68,6 +68,8 @@
     ```
     kubectl rollout undo deployment/name
     ```
+    
+![alt text](https://raw.githubusercontent.com/kesylo/Trainings/master/Images/vison.png)
 
 #### k8s Networking
 
