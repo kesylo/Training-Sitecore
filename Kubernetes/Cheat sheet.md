@@ -68,8 +68,6 @@
     ```
     kubectl rollout undo deployment/name
     ```
-    
-![alt text](https://raw.githubusercontent.com/kesylo/Trainings/master/Images/vison.png)
 
 #### k8s Networking
 
@@ -82,7 +80,12 @@ It also listen to a port on the node and forward incoming requests to the desire
 
 ***Services types:***
 - **NodePort**: As descibed above, this service is used to listen to a port number on the node and redirect external traffic to internal pods
+![alt text](https://raw.githubusercontent.com/kesylo/Trainings/master/Images/service-nodeport.png)
+This defines the Nodeport service but we dont know on which pod this has to hit as target. for that we use the **selector** spec and specify the label of the pod we defined in the pod definition file
+
+
 - **ClusterIp**: Creates a virtual IP in the node to enable communication between group of services internally (Backend - Frontend - DB)
+
 - **LoadBalancer**: Distribute external traffic to a group of pods depending on the load
 
 
