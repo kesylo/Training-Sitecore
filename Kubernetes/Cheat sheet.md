@@ -69,25 +69,39 @@
     kubectl rollout undo deployment/name
     ```
 
+#### k8s Secrets
+Used to pass sensitive data to our app as env vars. Config yaml looks like this:
+![alt text](https://raw.githubusercontent.com/kesylo/Trainings/master/Images/secret-definition.jpg)
+
+The values of the secrets are not plane text. hence the **Opaque** parameter. So you have to convert you value to base64 encoding before adding to the secret.yml file. to convert your plane text to base64 run:
+```
+echo -n 'stong_password' | base64
+```
+When deploying your app, the secrets need to be created before the deployment for them to be used by other files.
+You can reference secrets in your deployment definition like this:
+![alt text](https://raw.githubusercontent.com/kesylo/Trainings/master/Images/secret-ref.jpg)
+
+
 #### k8s Networking
 
 In K8s, IP are assigned to each pod at their creation. This is an internal IP and they change on pod creation.
-
-##### 1. Services
 K8s services enables communication between group of pods. eg: a group of frontend pods want to talk to a group of backend pods and a the group of backend pods talking to the group of DB pods.
 
 It also listen to a port on the node and forward incoming requests to the desired pod in the node (This setup is used to give external access to your app).
 
+Note: To group objects of same interest we use the labels.app prop. 
+
 ***Services types:***
+- **ClusterIp** (Default type): Creates a virtual IP in the node to enable communication between group of services internally (Backend - Frontend - DB). We create a clusterIp service for each group of related pods to be accessible via 1 and only IP.
+![alt text](https://raw.githubusercontent.com/kesylo/Trainings/master/Images/service-clusterip-schema.png)
+
 - **NodePort**: As descibed above, this service is used to listen to a port number on the node and redirect external traffic to internal pods
 ![alt text](https://raw.githubusercontent.com/kesylo/Trainings/master/Images/service-nodeport.png)
 This defines the Nodeport service but we dont know on which pod this has to hit as target. for that we use the **selector** spec and specify the label of the pod we defined in the pod definition file
 
+- **LoadBalancer**: Distribute external traffic to a group of pods depending on the load. the config is the same as nodePort but we just change the type. this works on majors cloud providers.
 
-- **ClusterIp**: Creates a virtual IP in the node to enable communication between group of services internally (Backend - Frontend - DB)
-
-- **LoadBalancer**: Distribute external traffic to a group of pods depending on the load
-
+#### Microservices
 
 ### Ressources
 
